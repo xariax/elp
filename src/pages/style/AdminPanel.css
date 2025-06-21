@@ -1,0 +1,259 @@
+html, body, #root {
+  height: auto;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto; /* Przewijanie na całe okno */
+}
+
+.parent {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 200px auto;
+  grid-column-gap: 0;
+  grid-row-gap: 0;
+  height: 100vh;
+  position: relative; /* dla overlay */
+ 
+}
+
+/* NIE MA .div4 w gridzie! */
+
+.div1 { 
+  grid-area: 1 / 1 / 2 / 3;
+  background-color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  border-radius: 12px;
+}
+
+.div2 { 
+  width: 100%;
+  grid-area: 1 / 3 / 2 / 6;
+  background-color: blue;
+ display: flex;
+ justify-content: center;
+  color: white;
+  z-index: 1;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+.div3 {
+  grid-area: 2 / 1 / 3 / 6;
+  display: block; /* Zmiana na block zamiast flex */
+  background: yellow;
+  padding: 5px;
+  border-radius: 12px;
+  margin: 5px;
+  min-height: min-content; /* Wysokość dopasowana do zawartości */
+}
+
+
+.HorizontalMenu {
+ margin: 0 auto;
+  width:90%;
+  background-color: aquamarine;
+  margin-top: 10px;
+  padding:30px;
+}
+.default-menu {
+
+  display: flex;
+flex-direction: row;
+flex-wrap: wrap-reverse;
+column-gap:25px;
+justify-content: space-between;
+align-items: center;
+align-content: center;
+box-sizing: border-box;
+}
+.div2 .menu-item {
+  margin-top:25px;
+  margin-bottom: 25px;
+  background: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-size: 13px;
+}
+
+.Content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  color: red;
+  background-color: pink;
+  width: 95%;
+  padding: 35px;
+  margin-top: 12px;
+  min-height: min-content; /* Naturalna wysokość */
+}
+
+.scrollable-container {
+  flex: 1; /* zajmuje całą dostępną przestrzeń */
+  min-height: 0; /* pozwala się kurczyć */
+}
+
+
+/* Sidebar jako overlay */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;      /* pełna wysokość okna */
+  width: 25px;        /* lub szerokość otwartego menu */
+  background: #003d82;
+  color: #fff;
+  transition: width 0.3s cubic-bezier(.4,0,.2,1);
+  z-index: 100;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+  overflow: hidden;
+}
+
+.sidebar-overlay.open {
+  width: 200px;
+}
+
+.sidebar-toggle {
+  background: rgba(0,0,0,0.2);
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  width: 100%;
+  padding: 12px 0;
+  transition: background 0.2s;
+  position: sticky;
+  top: 0;
+  z-index: 15;
+}
+
+.sidebar-toggle:hover {
+  background: rgba(0,0,0,0.3);
+}
+
+.sidebar-content {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  padding: 20px 15px;
+}
+
+.sidebar-overlay.open .sidebar-content {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.3s 0.1s;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-menu li {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.sidebar-menu li:hover {
+  background: rgba(255,255,255,0.1);
+}
+/* Efekt przyciemnienia tła */
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 9; /* Poniżej sidebaru (10), powyżej reszty (1) */
+  animation: fadeIn 0.3s ease;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Dodaj przejście dla sidebaru */
+.sidebar-overlay {
+  /* ... istniejące style ... */
+  transition: 
+    width 0.3s cubic-bezier(.4,0,.2,1),
+    box-shadow 0.3s ease; /* Dodajemy animację cienia */
+  z-index: 10;
+}
+
+.sidebar-overlay.open {
+  width: 200px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.2); /* Większy cień gdy otwarte */
+}
+
+/* Nowy kontener dla nagłówka - zachowuje układ grid */
+.header-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: auto;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+}
+
+/* Zachowaj oryginalne pozycje div1 i div2 */
+.header-container .div1 {
+  grid-area: 1 / 1 / 2 / 3;
+  background-color: red;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: center;
+  padding: 15px;
+  z-index: 5;
+}
+
+.header-container .div2 {
+  grid-area: 1 / 3 / 2 / 6;
+  background-color: blue;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 15px;
+  color: white;
+  z-index: 5;
+}
+
+/* Animacje */
+.header-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+  height: auto;
+  overflow: visible;
+}
+
+.header-container.hidden {
+  opacity: 0;
+  transform: translateY(-20px);
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
