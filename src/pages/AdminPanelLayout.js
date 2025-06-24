@@ -1,4 +1,5 @@
-import Greeting from '../components/AdminComponents/AdminGreeting';
+//import Greeting from '../components/AdminComponents/AdminGreeting';
+import logo from './logo.png'
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import SideBar from '../components/AdminComponents/SideBarMenu/SideBar'; // <-- Dodaj import
@@ -35,7 +36,7 @@ const Navigate = useNavigate();
         onMenuSelect={handleMenuSelect}
       />
       <div className="div1">
-        <Greeting />
+        <img src={logo} alt="Elpes Logo" className="elpes-logo" />
       </div>
       <div className="div2">
         
