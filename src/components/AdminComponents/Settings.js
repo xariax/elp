@@ -8,7 +8,7 @@ const Settings = () => {
         <h2>Ustawienia</h2>
         <h2>Ustawienia</h2>
         <h2>Ustawienia</h2>
-        value<h2>Ustawienia</h2>
+        <h2>Ustawienia</h2>
         <h2>Ustawienia</h2>
         <h2>Ustawienia</h2>
         <h2>Ustawienia</h2>
