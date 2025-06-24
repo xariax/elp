@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/xariax/elp/static/css/main.96c1e105.css",
+    "main.js": "/xariax/elp/static/js/main.b2b19419.js",
+    "index.html": "/xariax/elp/index.html",
+    "main.96c1e105.css.map": "/xariax/elp/static/css/main.96c1e105.css.map",
+    "main.b2b19419.js.map": "/xariax/elp/static/js/main.b2b19419.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.96c1e105.css",
+    "static/js/main.b2b19419.js"
+  ]
+}
