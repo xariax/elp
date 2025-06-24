@@ -1,5 +1,6 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation} from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { AnimatePresence, motion } from 'framer-motion';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminPanel from './pages/AdminPanelLayout';
 import UserPanel from './pages/UserPanel';
@@ -15,14 +16,38 @@ import PSG3 from './components/AdminComponents/Machines/PSG3';
 import ENGEL from './components/AdminComponents/Machines/ENGEL';
 import GALUS from './components/AdminComponents/Machines/GALUS';
 function App() {
+
+  const location = useLocation();
   return (
     <AuthProvider>
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        
+         <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route 
+            path="/login" 
+            element={
+              <motion.div
+                initial={{ opacity: 0, x: 0 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 0 }}
+                transition={{ duration: 0.2 }} // 2 sekundy animacji przejścia
+              >
+                <LoginPage />
+              </motion.div>
+            } 
+          />
         {/* Panel administratora z podtrasami */}
         <Route element={<ProtectedRoute requiredRole="admin" />}>
-          <Route path="/admin" element={<AdminPanel />}>
+          <Route path="/admin"
+              element={
+                <motion.div
+                  initial={{ opacity: 0, x: 0 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 0 }}
+                  transition={{ duration: 0.2 }} // 2 sekundy animacji przejścia
+                >
+                  <AdminPanel />
+                </motion.div>
+              }>
             <Route index element={<MachineManagement />} />
             <Route path="machines" element={<MachineManagement />} />
             <Route path="users" element={<UserManagement />} />
@@ -42,6 +67,7 @@ function App() {
         
         <Route path="*" element={<HomePage />} />
       </Routes>
+      </AnimatePresence>
     </AuthProvider>
   );
 }
