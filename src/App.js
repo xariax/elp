@@ -36,7 +36,7 @@ function App() {
             } 
           />
         {/* Panel administratora z podtrasami */}
-        <Route element={<ProtectedRoute requiredRole="admin" />}>
+        <Route element={<ProtectedRoute requiredRole="Admin" />}>
           <Route path="/admin"
               element={
                 <motion.div
@@ -61,7 +61,7 @@ function App() {
           </Route>
         </Route>
 
-        <Route element={<ProtectedRoute requiredRole="user" />}>
+        <Route element={<ProtectedRoute requiredRole="User" />}>
          <Route path="/user" element={<UserPanel />} />
         </Route>
         

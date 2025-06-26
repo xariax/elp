@@ -17,9 +17,9 @@ const LoginForm = () => {
 
   // BACKEND INTEGRATION: Zastąp tą tablicę połączeniem z API
   const users = [
-    { login: 'Rafał', password: 'tajnehaslo', role: 'admin' },
-    { login: 'jan', password: 'jan123', role: 'user' },
-    { login: 'anna', password: 'anna123', role: 'user' },
+    { login: 'Rafał', password: 'tajnehaslo', role: 'Admin' },
+    { login: 'jan', password: 'jan123', role: 'User' },
+    { login: 'anna', password: 'anna123', role: 'User' },
   ];
 
   /**
@@ -54,7 +54,7 @@ const LoginForm = () => {
         role: foundUser.role
       });
 
-      navigate(foundUser.role === 'admin' ? '/admin' : '/user', { replace: true });
+      navigate(foundUser.role === 'Admin' ? '/admin' : '/user', { replace: true });
     } else {
       setError('Nieprawidłowy login lub hasło');
     }
