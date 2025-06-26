@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, IconButton, Button, Divider, Box, CssBaseline } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import Menu from '@mui/material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
 import ContactMailIcon from '@mui/icons-material/ContactMail';
+import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import "./style/UserPanel.css"
@@ -11,6 +13,15 @@ import "./style/UserPanel.css"
 export default function LeftExpandableAppBar() {
   const [open, setOpen] = useState(false);
     const { user, logout } = useAuth();
+     const [anchorEl, setAnchorEl] = useState(null);
+  const openEd = Boolean(anchorEl);
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
 
   const toggleOpen = () => {
     setOpen(!open);
@@ -169,7 +180,33 @@ export default function LeftExpandableAppBar() {
 
                 {/* Div na całą szerokość */}
                 <div className="div-full-width">
-                    <h2>To jest div na całą szerokość</h2>
+                    
+                      <Button
+        id="basic-button"
+        aria-controls={openEd ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={openEd ? 'true' : undefined}
+        onClick={handleClick}
+      >
+        Dashboard
+      </Button>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        slotProps={{
+          list: {
+            'aria-labelledby': 'basic-button',
+          },
+        }}
+      >
+        <MenuItem onClick={handleClose}>Profile</MenuItem>
+        <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem onClick={handleClose}>Logout</MenuItem>
+      </Menu>
+
+
                 </div>
 
                 {/* Div na 80% szerokości, wyśrodkowany */}
