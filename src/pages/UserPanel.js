@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, IconButton, Button, Divider, Box, CssBaseline } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Menu from '@mui/material/Menu';
+
 import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
 import ContactMailIcon from '@mui/icons-material/ContactMail';
-import MenuItem from '@mui/material/MenuItem';
+import Backdrop from '@mui/material/Backdrop';
+
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import "./style/UserPanel.css"
@@ -18,9 +19,7 @@ export default function LeftExpandableAppBar() {
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+
 
 
   const toggleOpen = () => {
@@ -31,8 +30,17 @@ export default function LeftExpandableAppBar() {
     <>
       <CssBaseline />
       <Box display="flex" flexDirection="row" height="100vh">
+
+         <Backdrop
+            open={open}
+            onClick={() => setOpen(false)}
+            sx={{
+            zIndex: 1199,
+            position: 'fixed'
+    }}
+  />
         {/* Lewy AppBar */}
-        <Box flexGrow={0}>
+        <Box flexGrow={0} sx={{ zIndex: 1200, position: 'relative' }}>
             
           <AppBar
             position="sticky"
@@ -45,7 +53,7 @@ export default function LeftExpandableAppBar() {
               color: '#fff',      // białe ikony i tekst
             }}
           >
-           
+
             <Toolbar
               sx={{
                 flexDirection: 'column',
@@ -68,13 +76,113 @@ export default function LeftExpandableAppBar() {
                 <MenuIcon />
               </IconButton>
 
-                {open && (
-  <div style={{ marginTop: '-23px', padding: 8, width: '100%' }}>
-    <p style={{ marginLeft: 0, fontSize: 14 }}>
-        
- {user?.role} : {user?.login}</p>
 
-    
+
+              <Divider sx={{ my: 1, width: '100%', bgcolor: 'rgba(255,255,255,0.2)'}} />
+              <Button
+                component={Link}
+                to="/"
+                startIcon={<HomeIcon sx={{ color: '#fff', 
+                    '&:hover': { 
+                        width: '50px',
+                        borderRadius: 10,
+                        bgcolor: '#1565c0',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                    }  }} />}
+                sx={{   
+                display: 'flex',
+                alignItems: 'center',
+                marginLeft: open ? 0 :'10px',
+                justifyContent: open ? 'flex-start' : 'center',
+                width: '100%',
+                minWidth: 0,
+                mb: 1,
+                bgcolor: '#1976d2',
+                color: '#fff',
+                px: open ? 2 : 0,
+                borderRadius: '8px',
+                transition: 'box-shadow 0.2s, background 0.2s',
+                boxShadow: 'none',
+                
+                '&:hover': open ?{
+                bgcolor: '#1565c0',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                zIndex: 1,
+                } : {}
+                }}
+              >
+                {open && 'Home'}
+              </Button>
+              <Button
+                component={Link}
+                to="/about"
+                startIcon={<InfoIcon  sx={{ color: '#fff', 
+                    '&:hover': { 
+                        width: '50px',
+                        borderRadius: 10,
+                        bgcolor: '#1565c0',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                    }  }} />}
+                sx={{
+                display: 'flex',
+                alignItems: 'center',
+                marginLeft: open ? 0 :'10px',
+                justifyContent: open ? 'flex-start' : 'center',
+                width: '100%',
+                minWidth: 0,
+                mb: 1,
+                bgcolor: '#1976d2',
+                color: '#fff',
+                px: open ? 2 : 0,
+                borderRadius: '8px',
+                transition: 'box-shadow 0.2s, background 0.2s',
+                boxShadow: 'none',
+              '&:hover': open ?{
+                bgcolor: '#1565c0',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                zIndex: 1,
+                } : {}
+                }}
+              >
+                {open && 'About'}
+              </Button>
+              <Button
+                component={Link}
+                to="/email"
+                startIcon={<ContactMailIcon  sx={{ color: '#fff', 
+                    '&:hover': { 
+                        width: '50PX',
+                        borderRadius: 10,
+                        bgcolor: '#1565c0',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                    }  }} />}
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    marginLeft: open ? 0 :'10px',
+                    justifyContent: open ? 'flex-start' : 'center',
+                    width: '100%',
+                    minWidth: 0,
+                    mb: 1,
+                    bgcolor: '#1976d2',
+                    color: '#fff',
+                    px: open ? 2 : 0,
+                    borderRadius: '8px',
+                    transition: 'box-shadow 0.2s, background 0.2s',
+                    boxShadow: 'none',
+                     '&:hover': open ?{
+                bgcolor: '#1565c0',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                zIndex: 1,
+                } : {}
+                }}
+              >
+                {open && 'Contact'}
+              </Button>
+
+ {open && (
+  <div style={{ marginTop: '40px', padding: 8, width: '100%' }}>
+       
     <button
       onClick={logout}
       style={{
@@ -91,120 +199,36 @@ export default function LeftExpandableAppBar() {
     >
       Wyloguj
     </button>
-
+ 
   </div>
 )}
+            
 
-
-              <Divider sx={{ my: 1, width: '100%', bgcolor: 'rgba(255,255,255,0.2)' }} />
-              <Button
-                component={Link}
-                to="/"
-                startIcon={<HomeIcon sx={{ color: '#fff' }} />}
-                sx={{   
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: open ? 'flex-start' : 'center',
-                width: '100%',
-                minWidth: 0,
-                mb: 1,
-                bgcolor: '#1976d2',
-                color: '#fff',
-                px: open ? 2 : 0,
-                borderRadius: '8px',
-                transition: 'box-shadow 0.2s, background 0.2s',
-                boxShadow: 'none',
-                '&:hover': {
-                bgcolor: '#1565c0',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
-                zIndex: 1,
-    }}}
-              >
-                {open && 'Home'}
-              </Button>
-              <Button
-                component={Link}
-                to="/about"
-                startIcon={<InfoIcon sx={{ color: '#fff' }} />}
-                sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: open ? 'flex-start' : 'center',
-                width: '100%',
-                minWidth: 0,
-                mb: 1,
-                bgcolor: '#1976d2',
-                color: '#fff',
-                px: open ? 2 : 0,
-                borderRadius: '8px',
-                transition: 'box-shadow 0.2s, background 0.2s',
-                boxShadow: 'none',
-                '&:hover': {
-                bgcolor: '#1565c0',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
-                zIndex: 1,
-                }}}
-              >
-                {open && 'About'}
-              </Button>
-              <Button
-                component={Link}
-                to="/email"
-                startIcon={<ContactMailIcon sx={{ color: '#fff' }} />}
-                sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: open ? 'flex-start' : 'center',
-                    width: '100%',
-                    minWidth: 0,
-                    mb: 1,
-                    bgcolor: '#1976d2',
-                    color: '#fff',
-                    px: open ? 2 : 0,
-                    borderRadius: '8px',
-                    transition: 'box-shadow 0.2s, background 0.2s',
-                    boxShadow: 'none',
-                    '&:hover': {
-                    bgcolor: '#1565c0',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
-                    zIndex: 1,
-                }}}
-              >
-                {open && 'Contact'}
-              </Button>
             </Toolbar>
+                       
+               
           </AppBar>
+          
         </Box>
         {/* Główna zawartość */}
+        
             <Box flexGrow={1} p={3}>
-
+                <div style={{marginTop:'-30px'}}>
+                <p style={{fontSize:10, display:'flex',justifyContent:'flex-end'}}>Zalogowany jako:{user?.name}</p>
+                <p style={{fontSize:10, display:'flex',justifyContent:'flex-end', marginTop:'-8px'}}>Uprawnienia: {user?.role === 'admin' ? 'Administator' : 'Operator'}</p>
+                </div>
                 {/* Div na całą szerokość */}
                 <div className="div-full-width">
                     
-                      <Button
-        id="basic-button"
-        aria-controls={openEd ? 'basic-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={openEd ? 'true' : undefined}
-        onClick={handleClick}
-      >
-        Dashboard
-      </Button>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        slotProps={{
-          list: {
-            'aria-labelledby': 'basic-button',
-          },
-        }}
-      >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
-      </Menu>
+                         <Button
+                            id="basic-button"
+                            aria-controls={openEd ? 'basic-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={openEd ? 'true' : undefined}
+                            onClick={handleClick}
+                        >
+                            Dashboard
+                        </Button>
 
 
                 </div>
