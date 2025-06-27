@@ -10,9 +10,12 @@ import MachineManagement from './components/AdminComponents/MachineManagement';
 import UserManagement from './components/AdminComponents/UserManagement';
 import Reports from './components/AdminComponents/Reports';
 import Settings from './components/AdminComponents/Settings';
-import PSG1 from './components/AdminComponents/Machines/PSG1';
-import PSG2 from './components/AdminComponents/Machines/PSG2';
-import PSG3 from './components/AdminComponents/Machines/PSG3';
+import AdminPSG1 from './components/AdminComponents/Machines/AdminPSG1';
+import AdminPSG2 from './components/AdminComponents/Machines/AdminPSG2';
+import AdminPSG3 from './components/AdminComponents/Machines/AdminPSG3';
+import PSG1 from './components/UserComponents/UserPsg1';
+import PSG3 from './components/UserComponents/UserPsg3';
+import PSG2 from './components/UserComponents/UserPsg2';
 import ENGEL from './components/AdminComponents/Machines/ENGEL';
 import GALUS from './components/AdminComponents/Machines/GALUS';
 function App() {
@@ -53,16 +56,21 @@ function App() {
             <Route path="users" element={<UserManagement />} />
             <Route path="reports" element={<Reports />} />
             <Route path="settings" element={<Settings />} />
-            <Route path="/admin/machines/psg1" element={<PSG1 />} />
-            <Route path="/admin/machines/psg2" element={<PSG2 />} />
-            <Route path="/admin/machines/psg3" element={<PSG3 />} />
+            <Route path="/admin/machines/psg1" element={<AdminPSG1 />} />
+            <Route path="/admin/machines/psg2" element={<AdminPSG2 />} />
+            <Route path="/admin/machines/psg3" element={<AdminPSG3 />} />
             <Route path="/admin/machines/engel" element={<ENGEL />} />
             <Route path="/admin/machines/galus" element={<GALUS />} />
           </Route>
         </Route>
 
         <Route element={<ProtectedRoute requiredRole="User" />}>
-         <Route path="/user" element={<UserPanel />} />
+
+         <Route path="/user" element={<UserPanel />} >
+         <Route path="psg1" element={<PSG1 />} />
+         <Route path="psg2" element={<PSG2 />} />
+         <Route path="psg3" element={<PSG3 />} />
+         </Route>
         </Route>
         
         <Route path="*" element={<HomePage />} />

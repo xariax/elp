@@ -1,24 +1,23 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { AppBar, Toolbar, IconButton, Button, Divider, Box, CssBaseline } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-
+import UserHorizontalMenu from '../components/UserComponents/UserHorizontalMenu'
 import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
 import ContactMailIcon from '@mui/icons-material/ContactMail';
 import Backdrop from '@mui/material/Backdrop';
-
+import { Outlet } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import "./style/UserPanel.css"
 
 export default function LeftExpandableAppBar() {
+  
   const [open, setOpen] = useState(false);
     const { user, logout } = useAuth();
-     const [anchorEl, setAnchorEl] = useState(null);
-  const openEd = Boolean(anchorEl);
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
-  };
+  const location = useLocation();
+  
 
 
 
@@ -46,6 +45,7 @@ export default function LeftExpandableAppBar() {
             position="sticky"
             elevation={1}
             sx={{
+              boxShadow: '8px 0 12px -4px rgba(0,0,0,0.3)', 
               width: open ? 200 : 50,
               minHeight: '100vh',
               transition: 'width 0.3s',
@@ -216,19 +216,15 @@ export default function LeftExpandableAppBar() {
                 <div style={{marginTop:'-30px'}}>
                 <p style={{fontSize:10, display:'flex',justifyContent:'flex-end'}}>Zalogowany jako:{user?.name}</p>
                 <p style={{fontSize:10, display:'flex',justifyContent:'flex-end', marginTop:'-8px'}}>Uprawnienia: {user?.role === 'admin' ? 'Administator' : 'Operator'}</p>
+                <p style={{fontSize:10, display:'flex',justifyContent:'flex-start',marginTop:'-40px'}}>Obecna ścieżka: <strong>{location.pathname}</strong></p>
                 </div>
+
+                
                 {/* Div na całą szerokość */}
+
                 <div className="div-full-width">
                     
-                         <Button
-                            id="basic-button"
-                            aria-controls={openEd ? 'basic-menu' : undefined}
-                            aria-haspopup="true"
-                            aria-expanded={openEd ? 'true' : undefined}
-                            onClick={handleClick}
-                        >
-                            Dashboard
-                        </Button>
+                    <UserHorizontalMenu/>
 
 
                 </div>
@@ -237,6 +233,8 @@ export default function LeftExpandableAppBar() {
                 <div className="div-80-width">
                     <h3>To jest div na 80% szerokości</h3>
                     <p>Możesz tu dodać dowolną zawartość.</p>
+
+                    <Outlet />
                 </div>
 
 

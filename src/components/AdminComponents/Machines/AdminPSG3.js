@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import Modal from './Modal';
 
-const Psg1 = () => {
+const AdminPsg3 = () => {
   const { setHorizontalMenuOptions } = useOutletContext();
   const [showModal, setShowModal] = useState(false);
 
@@ -27,4 +27,4 @@ const Psg1 = () => {
   );
 };
 
-export default Psg1;
+export default AdminPsg3;

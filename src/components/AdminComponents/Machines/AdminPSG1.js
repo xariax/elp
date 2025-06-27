@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 
-const PSG1 = () => {
+const AdminPSG1 = () => {
   const { setHorizontalMenuOptions } = useOutletContext();
 
   useEffect(() => {
@@ -21,4 +21,4 @@ const PSG1 = () => {
   );
 };
 
-export default PSG1;
+export default AdminPSG1;
