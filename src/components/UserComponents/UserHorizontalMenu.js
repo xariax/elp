@@ -1,122 +1,92 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from 'framer-motion';
-import './horizontalMenu.css'
+import './horizontalMenu.css';
 
 const UserHorizontalMenu = () => {
-  const [ActiveHorizontalMenu, setActiveHorizontalMenu] = useState('main');
-  const Navigate = useNavigate();
+  const location = useLocation();
+  const navigate = useNavigate();
   
+  // Wyciągamy segment ścieżki (np. "psg1" z "/user/psg1")
+  const currentSegment = location.pathname.split('/')[2] || 'main';
+
   const MainMenu = [
-    { id: 'psg1', label: 'PSG1'},
-    { id: 'psg2', label: 'PSG2', path: 'psg2' },
-    { id: 'psg3', label: 'PSG3', path: 'psg3' }
+    { id: 'psg1', label: 'PSG1', path: "/user/psg1" },
+    { id: 'psg2', label: 'PSG2', path: "/user/psg2" },
+    { id: 'psg3', label: 'PSG3', path: "/user/psg3" }
   ];
 
   const optionsPsg1 = [
-    {id:'0', label: 'Strona Główna', path:"/user"},
-    {id:'1', label: 'Plany', path: 'psg1'},
-    {id:'2', label: 'Zamówienia'},
-    {id:'3', label: 'Magazyn'},
-    {id:'4', label: 'Powrót', action: {onClick:()=> setActiveHorizontalMenu('main')}
-    }
-  ]
+    { id: '0', label: 'Strona Główna', path: "/user" },
+    { id: '1', label: 'Plany', path: "/user/psg1/plans" },
+    { id: '2', label: 'Zamówienia', path: "/user/psg1/orders" },
+    { id: '3', label: 'Magazyn', path: "/user/psg1/stock" },
+    { id: '4', label: 'Narzędzia', path: "/user/psg1/tools" },
+    { id: '5', label: 'Powrót', path: "/user" }
+  ];
 
   const optionsPsg2 = [
-    {id:'0', label: 'Strona Główna', path:"/user"},
-    {id:'1', label: 'Plany', path: 'psg2'},
-    {id:'2', label: 'Zamówienia'},
-    {id:'3', label: 'Magazyn'},
-    {id:'4', label: 'Powrót', action: {onClick:()=> setActiveHorizontalMenu('main')}
+    { id: '0', label: 'Strona Główna', path: "/user" },
+    { id: '1', label: 'Plany', path: "/user/psg2" },
+    { id: '2', label: 'Zamówienia', path: "/user/psg2/zamowienia" },
+    { id: '3', label: 'Magazyn', path: "/user/psg2/magazyn" },
+    { id: '4', label: 'Powrót', path: "/user" }
+  ];
+
+  const optionsPsg3 = [
+    { id: '0', label: 'Strona Główna', path: "/user" },
+    { id: '1', label: 'Plany', path: "/user/psg3" },
+    { id: '2', label: 'Zamówienia', path: "/user/psg3/zamowienia" },
+    { id: '3', label: 'Magazyn', path: "/user/psg3/magazyn" },
+    { id: '4', label: 'Powrót', path: "/user" }
+  ];
+
+  const handleClick = (path) => {
+    // Nawiguj tylko jeśli nie jesteśmy już na tej ścieżce
+    if (location.pathname !== path) {
+      navigate(path, { replace: true }); // replace: true zapobiega powielaniu ścieżki
     }
-  ]
-const optionsPsg3 = [
-    {id:'0', label: 'Strona Główna', path:"/user"},
-    {id:'1', label: 'Plany', path: 'psg3'},
-    {id:'2', label: 'Zamówienia'},
-    {id:'3', label: 'Magazyn'},
-    {id:'4', label: 'Powrót', action: {onClick:()=> setActiveHorizontalMenu('main')}
-    }
-  ]
+  };
+
+  // Wybierz odpowiednie opcje na podstawie aktualnej ścieżki
+  let options = [];
+  if (currentSegment === 'psg1') options = optionsPsg1;
+  if (currentSegment === 'psg2') options = optionsPsg2;
+  if (currentSegment === 'psg3') options = optionsPsg3;
+
   return (
- <AnimatePresence mode="wait">
-                  <motion.div
-                    key={ActiveHorizontalMenu}
-                    initial={{ opacity: 0, y: 0 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4 }}
-                    
-                  >
-    <div className="userHorizontalMenu">
-      {/* Wyświetl główne menu tylko, gdy aktywne menu to 'main' */}
-      {ActiveHorizontalMenu === 'main' && (
-        MainMenu.map(item => (
-          <button
-            key={item.id}
-            className="menu-item"
-            onClick={() => {
-           
-              setActiveHorizontalMenu(item.id);
-            }}
-          >
-            {item.label}
-          </button>
-        ))
-      )}
-
-      {/* Podmenu dla PSG1 */}
-      {ActiveHorizontalMenu === 'psg1' && (
-        optionsPsg1.map(option =>(
-            <button 
-            key={option.id}
-            className="menu-item"
-            onClick={()=> {
-                Navigate(option.path)
-                if (option.action?.onClick) {
-                    option.action.onClick();
-      }
-            }}>
-                {option.label}
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={currentSegment}
+        initial={{ opacity: 0, y: 0 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+      >
+        <div className="userHorizontalMenu">
+          {/* Główne menu */}
+          {currentSegment === 'main' && MainMenu.map(item => (
+            <button
+              key={item.id}
+              className="menu-item"
+              onClick={() => handleClick(item.path)}
+            >
+              {item.label}
             </button>
-        ))
-      )}
-
-      {/* Podmenu dla PSG2 */}
-      {ActiveHorizontalMenu === 'psg2' && (
-       optionsPsg2.map(option =>(
-            <button 
-            key={option.id}
-            className="menu-item"
-            onClick={()=> {
-                Navigate(option.path)
-                if (option.action?.onClick) {
-                    option.action.onClick();
-      }
-            }}>
-                {option.label}
+          ))}
+          
+          {/* Podmenu */}
+          {currentSegment !== 'main' && options.map(option => (
+            <button
+              key={option.id}
+              className="menu-item"
+              onClick={() => handleClick(option.path)}
+            >
+              {option.label}
             </button>
-        ))
-      )}
-
-      {/* Podmenu dla PSG3 */}
-      {ActiveHorizontalMenu === 'psg3' && (
-        optionsPsg3.map(option =>(
-            <button 
-            key={option.id}
-            className="menu-item"
-            onClick={()=> {
-                Navigate(option.path)
-                if (option.action?.onClick) {
-                    option.action.onClick();
-      }
-            }}>
-                {option.label}
-            </button>
-        ))
-      )}
-    </div>
-  </motion.div>
-</AnimatePresence>
+          ))}
+        </div>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 

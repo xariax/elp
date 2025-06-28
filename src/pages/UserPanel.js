@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AppBar, Toolbar, IconButton, Button, Divider, Box, CssBaseline } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import UserHorizontalMenu from '../components/UserComponents/UserHorizontalMenu'
@@ -13,11 +13,16 @@ import { useAuth } from '../context/AuthContext';
 import "./style/UserPanel.css"
 
 export default function LeftExpandableAppBar() {
-  
+  const [activeHorizontalMenu, setActiveHorizontalMenu] = useState('main');
   const [open, setOpen] = useState(false);
     const { user, logout } = useAuth();
   const location = useLocation();
-  
+  const navigate = useNavigate();
+
+    const handleLogout = async () => {
+    await logout();
+    navigate('/'); // Przekierowanie na stronę główną
+  };
 
 
 
@@ -184,7 +189,10 @@ export default function LeftExpandableAppBar() {
   <div style={{ marginTop: '40px', padding: 8, width: '100%' }}>
        
     <button
-      onClick={logout}
+      onClick={e => { 
+  e.stopPropagation(); 
+  handleLogout(); 
+}}
       style={{
         marginTop: 4,
         marginBottom: 10,
@@ -224,11 +232,15 @@ export default function LeftExpandableAppBar() {
 
                 <div className="div-full-width">
                     
-                    <UserHorizontalMenu/>
+                    <UserHorizontalMenu 
+                    activeHorizontalMenu={activeHorizontalMenu}
+                    setActiveHorizontalMenu={setActiveHorizontalMenu}
+                    />
+
 
 
                 </div>
-
+                  {activeHorizontalMenu === 'psg1' ? <p>LOL</p> : null}
                 {/* Div na 80% szerokości, wyśrodkowany */}
                 <div className="div-80-width">
                     <h3>To jest div na 80% szerokości</h3>

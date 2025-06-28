@@ -1,11 +1,12 @@
 import { Routes, Route, useLocation} from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { AnimatePresence, motion } from 'framer-motion';
+
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminPanel from './pages/AdminPanelLayout';
 import UserPanel from './pages/UserPanel';
 import LoginPage from './pages/LoginPage';
-import HomePage from './pages/HomePage'
+import HomePageUser from './components/UserComponents/HomePageUser';
 import MachineManagement from './components/AdminComponents/MachineManagement';
 import UserManagement from './components/AdminComponents/UserManagement';
 import Reports from './components/AdminComponents/Reports';
@@ -16,6 +17,10 @@ import AdminPSG3 from './components/AdminComponents/Machines/AdminPSG3';
 import PSG1 from './components/UserComponents/UserPsg1';
 import PSG3 from './components/UserComponents/UserPsg3';
 import PSG2 from './components/UserComponents/UserPsg2';
+import ORDER from './components/UserComponents/Order';
+import Stock from './components/UserComponents/Stock';
+import Plans from './components/UserComponents/Plans';
+import Tools from './components/UserComponents/Tools'
 import ENGEL from './components/AdminComponents/Machines/ENGEL';
 import GALUS from './components/AdminComponents/Machines/GALUS';
 function App() {
@@ -26,7 +31,7 @@ function App() {
          <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route 
-            path="/login" 
+            path="/" 
             element={
               <motion.div
                 initial={{ opacity: 0, x: 0 }}
@@ -65,18 +70,23 @@ function App() {
         </Route>
 
         <Route element={<ProtectedRoute requiredRole="User" />}>
-
-         <Route path="/user" element={<UserPanel />} >
-         <Route path="psg1" element={<PSG1 />} />
-         <Route path="psg2" element={<PSG2 />} />
-         <Route path="psg3" element={<PSG3 />} />
-         </Route>
-        </Route>
-        
-        <Route path="*" element={<HomePage />} />
-      </Routes>
+  <Route path="/user" element={<UserPanel />}>
+    <Route index element={<HomePageUser />} />
+    <Route path="psg1" element={<PSG1 />} />
+    <Route path="psg2" element={<PSG2 />} />
+    <Route path="psg3" element={<PSG3 />} />
+    <Route path="psg1/plans" element={<Plans />} />
+    <Route path="psg1/orders" element={<ORDER />} />
+    <Route path="psg1/stock" element={<Stock />} />
+    <Route path="psg1/tools" element={<Tools />} />
+    {/* Analogicznie dla PSG2 i PSG3 */}
+  </Route>
+</Route>
+</Routes>
       </AnimatePresence>
+      
     </AuthProvider>
+    
   );
 }
 

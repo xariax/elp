@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
+
 // Tworzymy kontekst autentykacji
 const AuthContext = createContext(null);
 
@@ -35,6 +36,9 @@ export const AuthProvider = ({ children }) => {
   /**
    * Funkcja wylogowująca użytkownika
    */
+
+  
+
   const logout = () => {
     setUser(null);
     localStorage.removeItem('user');
