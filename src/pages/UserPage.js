@@ -63,7 +63,7 @@ export default function LeftExpandableAppBar() {
             sx={{
               boxShadow: '8px 0 12px -4px rgba(0,0,0,0.3)', 
               width: open ? 200 : 50,
-              minHeight: '100vh',
+              height: '100%',
               transition: 'width 0.3s',
               bgcolor: '#1976d2', // niebieskie tło
               color: '#fff',      // białe ikony i tekst
