@@ -85,26 +85,7 @@ function getPartsToRemove(oldParts, newParts) {
   return oldParts.filter(oldPart => !newParts.find(p => p.numer === oldPart.numer));
 }
 
-// Selektor wariantów 
-function GlobalVariantSelector({ selected, onChange }) {
-  return (
-    <div style={{ marginBottom: 16 }}>
-      <strong>Ustaw domyślny wariant dla wszystkich pól:&nbsp;</strong>
-      {GLOBAL_VARIANTS.map(v => (
-        <label key={v} style={{ marginRight: 12 }}>
-          <input
-            type="radio"
-            name="global-variant"
-            value={v}
-            checked={selected === v}
-            onChange={() => onChange(v)}
-          />
-          &nbsp;{v}
-        </label>
-      ))}
-    </div>
-  );
-}
+
 // --- JEDNA TABELA ZMIAN ---
 function ChangeListTable({ doZalozenia, doZdjecia }) {
   const rows = [
@@ -164,6 +145,32 @@ function ChangeListTable({ doZalozenia, doZdjecia }) {
 }
 
 // --- KOMPONENTY ---
+function GlobalVariantSelector({ selected, onChange }) {
+  return (
+    <div style={{ marginBottom: 16 }}>
+      <strong>Ustaw domyślny wariant dla wszystkich pól:&nbsp;</strong>
+      {GLOBAL_VARIANTS.map(v => (
+        <label key={v} style={{ marginRight: 12 }}>
+          <input
+            type="radio"
+            name="global-variant"
+            value={v}
+            checked={selected === v}
+            onChange={() => onChange(v)}
+          />
+          &nbsp;{v}
+        </label>
+      ))}
+    </div>
+  );
+}
+
+
+
+
+
+
+
 function VariantsPanel({ version, diameter, variants, setVariants }) {
   const otherVersion = version === "A" ? "B" : "A";
   const partsWithVariants = PARTS_CONFIG.filter(p => p.variants && !p.isOM);
@@ -527,11 +534,15 @@ export default function App() {
   const [customVariants, setCustomVariants] = useState({});
   const [selectedCustomA, setSelectedCustomA] = useState("");
   const [selectedCustomB, setSelectedCustomB] = useState("");
+
+const partsA = generatePartsTable(diameterA, variants.A, omSet.A[diameterA]);
+  const partsB = generatePartsTable(diameterB, variants.B, omSet.B[diameterB]);
+  const doZalozenia = getPartsToAdd(partsA, partsB);
+  const doZdjecia = getPartsToRemove(partsA, partsB);
 const [globalVariant, setGlobalVariant] = useState("");
 
 function handleSetGlobalVariant(variant) {
   setGlobalVariant(variant);
-  // Ustawiamy wszystkie możliwe pola na wybrany wariant
   setVariants(prev => {
     const updateAll = (old) => {
       const result = {};
@@ -553,6 +564,8 @@ function handleSetGlobalVariant(variant) {
   });
 }
 
+
+
   function handleCustomSelect(version, value) {
     if (!value) return;
     setVariants(prev => {
@@ -567,10 +580,7 @@ function handleSetGlobalVariant(variant) {
     if (version === "A") setSelectedCustomA(value);
     if (version === "B") setSelectedCustomB(value);
   }
-const partsA = generatePartsTable(diameterA, variants.A, omSet.A[diameterA]);
-  const partsB = generatePartsTable(diameterB, variants.B, omSet.B[diameterB]);
-  const doZalozenia = getPartsToAdd(partsA, partsB);
-  const doZdjecia = getPartsToRemove(partsA, partsB);
+
   
 
   return (
@@ -642,6 +652,13 @@ const partsA = generatePartsTable(diameterA, variants.A, omSet.A[diameterA]);
           </select>
         </label>
       </div>
+
+<GlobalVariantSelector
+  selected={globalVariant}
+  onChange={handleSetGlobalVariant}
+/>
+
+
       {/* Panel A */}
       <VariantsPanel
         version="A"
@@ -721,11 +738,6 @@ const partsA = generatePartsTable(diameterA, variants.A, omSet.A[diameterA]);
       {/* ... inne panele ... */}
       <ChangeListTable doZalozenia={doZalozenia} doZdjecia={doZdjecia} />
     </div>
-
-<GlobalVariantSelector
-  selected={globalVariant}
-  onChange={handleSetGlobalVariant}
-/>
 
     </div>
   );
