@@ -22,7 +22,7 @@ const PARTS_CONFIG = [
   { name: "matryca_chlodz", variants: COOLING_VARIANTS },
   { name: "szczeki", variants: TOOL_VARIANTS },
   { name: "trzpienie", variants: TOOL_VARIANTS },
-  { name: "przekładacze", variants: TOOL_VARIANTS },
+  { name: "przekladacze", variants: TOOL_VARIANTS },
   { name: "dopychacz" },
   { name: "omy_s13_1", isOM: true },
   { name: "omy_s13_2", isOM: true },
