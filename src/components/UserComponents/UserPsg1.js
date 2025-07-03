@@ -584,10 +584,7 @@ const partsA = generatePartsTable(diameterA, variants.A, omSet.A[diameterA]);
       </div>
 
 
-<GlobalVariantSelector
-  selected={globalVariant}
-  onChange={handleSetGlobalVariant}
-/>
+
       <div style={{ margin: "12px 0" }}>
         <label>
           <input
@@ -724,6 +721,12 @@ const partsA = generatePartsTable(diameterA, variants.A, omSet.A[diameterA]);
       {/* ... inne panele ... */}
       <ChangeListTable doZalozenia={doZalozenia} doZdjecia={doZdjecia} />
     </div>
+
+<GlobalVariantSelector
+  selected={globalVariant}
+  onChange={handleSetGlobalVariant}
+/>
+
     </div>
   );
 }
