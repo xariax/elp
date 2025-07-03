@@ -176,10 +176,7 @@ export default function LeftExpandableAppBar() {
 
 
                 <div className="div-80-width">
-                    <h3>To jest div na 80% szerokości</h3>
-                    <p>Możesz tu dodać dowolną zawartość.</p>
-
-                    <Outlet />
+                  <Outlet />
                 </div>
 
 

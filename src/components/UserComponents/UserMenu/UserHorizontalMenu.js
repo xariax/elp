@@ -9,7 +9,8 @@ const UserHorizontalMenu = () => {
 
   const HorizontalStyle = {
                           display: 'flex',
-                          gap:'30px',
+                          gap:'20px',
+                          wrap:'no-wrap',
                           justifyContent: 'center',
                           alignItems: 'center'
                           }
