@@ -1,6 +1,7 @@
 import  { useState } from "react";
 
 // --- KONFIGURACJA ---
+const GLOBAL_VARIANTS = ["s13", "m15", "fts", "fractal", "niski-fractal", "pushon"];
 const TOOL_VARIANTS = ["s13", "m15", "pushon", "fractal", "fts"];
 const BUSHING = ["s13", "m15", "pushon"];
 const BUSHING_VARIANTS = ["2", "3", "4", "5", "7"];
@@ -84,7 +85,26 @@ function getPartsToRemove(oldParts, newParts) {
   return oldParts.filter(oldPart => !newParts.find(p => p.numer === oldPart.numer));
 }
 
-
+// Selektor wariantów 
+function GlobalVariantSelector({ selected, onChange }) {
+  return (
+    <div style={{ marginBottom: 16 }}>
+      <strong>Ustaw domyślny wariant dla wszystkich pól:&nbsp;</strong>
+      {GLOBAL_VARIANTS.map(v => (
+        <label key={v} style={{ marginRight: 12 }}>
+          <input
+            type="radio"
+            name="global-variant"
+            value={v}
+            checked={selected === v}
+            onChange={() => onChange(v)}
+          />
+          &nbsp;{v}
+        </label>
+      ))}
+    </div>
+  );
+}
 // --- JEDNA TABELA ZMIAN ---
 function ChangeListTable({ doZalozenia, doZdjecia }) {
   const rows = [
@@ -507,6 +527,31 @@ export default function App() {
   const [customVariants, setCustomVariants] = useState({});
   const [selectedCustomA, setSelectedCustomA] = useState("");
   const [selectedCustomB, setSelectedCustomB] = useState("");
+const [globalVariant, setGlobalVariant] = useState("");
+
+function handleSetGlobalVariant(variant) {
+  setGlobalVariant(variant);
+  // Ustawiamy wszystkie możliwe pola na wybrany wariant
+  setVariants(prev => {
+    const updateAll = (old) => {
+      const result = {};
+      for (const diameter of DIAMETERS) {
+        result[diameter] = { ...old[diameter] };
+        PARTS_CONFIG.forEach(part => {
+          if (part.variants && !part.isOM && part.variants.includes(variant)) {
+            result[diameter][part.name] = variant;
+          }
+        });
+      }
+      return result;
+    };
+    return {
+      ...prev,
+      A: updateAll(prev.A),
+      B: updateAll(prev.B),
+    };
+  });
+}
 
   function handleCustomSelect(version, value) {
     if (!value) return;
@@ -537,6 +582,12 @@ const partsA = generatePartsTable(diameterA, variants.A, omSet.A[diameterA]);
         <span style={{ background: "#d4edda", padding: "2px 8px", borderRadius: 4, marginRight: 8 }}>Zgodne</span>
         <span style={{ background: "#f8d7da", padding: "2px 8px", borderRadius: 4 }}>Różne</span>
       </div>
+
+
+<GlobalVariantSelector
+  selected={globalVariant}
+  onChange={handleSetGlobalVariant}
+/>
       <div style={{ margin: "12px 0" }}>
         <label>
           <input
