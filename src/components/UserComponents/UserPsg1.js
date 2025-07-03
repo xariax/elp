@@ -687,6 +687,8 @@ function handleSetGlobalVariant(variant) {
         setOmSet={setOmSet}
         enabled={membrana}
       />
+
+<ChangeListTable doZalozenia={doZalozenia} doZdjecia={doZdjecia} />
 {/*
       <div style={{ display: "flex", gap: 30 }}>
         <PartsTable title={`Części (${diameterA}, warianty A)`} parts={partsA} compareParts={partsB} />
@@ -734,10 +736,7 @@ function handleSetGlobalVariant(variant) {
         </button>
       </div>
 
-<div style={{ padding: 20, fontFamily: "Arial, sans-serif" }}>
-      {/* ... inne panele ... */}
-      <ChangeListTable doZalozenia={doZalozenia} doZdjecia={doZdjecia} />
-    </div>
+
 
     </div>
   );
