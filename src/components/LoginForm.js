@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import styled from 'styled-components';
-
+import logo from '../pages/logo.png'
 // Styled-components deklaruj ZAWSZE poza funkcją komponentu!
 const FormBox = styled.form`
   display: flex;
   flex-direction: column;
   align-items:center;
   gap: 15px;
-  background: rgba(255,255,255,0.85); /* lekko białe tło dla czytelności */
+  background: rgba(255,255,255,0.65);
   padding: 32px 24px;
   border-radius: 16px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.1);
@@ -86,8 +86,9 @@ const LoginForm = () => {
   return (
     
     <FormBox onSubmit={handleSubmit}>
-      {error && <div style={{ color: 'red', marginBottom: 8 }}>{error}</div>}
-       <h1 style={{marginBottom:'-2px'}}>Logowanie</h1>
+      <img src={logo} alt='logo firmy' style={{marginBottom:'20px'}}/>
+      {error && <div >{error}</div>}
+       
       <StyledInput
         type="text"
         value={credentials.login}
