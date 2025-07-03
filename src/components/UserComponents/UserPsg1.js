@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 // --- KONFIGURACJA ---
 const TOOL_VARIANTS = ["s13", "m15", "pushon", "fractal", "fts"];
