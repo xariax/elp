@@ -45,11 +45,11 @@ const DEFAULT_VARIANTS = {
     DIA50: { matryca: "pushon", bushing:"pushon", matryca_chlodz:"pushon", otwor:"pushon", przekladacze:"pushon", szczeki: "pushon", trzpienie: "pushon ", szpilki: "pushon" }
   },
   B: {
-    DIA28: { matryca: "s13", szczeki: "s13", trzpienie: "s13", szpilki: "12.5" },
-    DIA30: { matryca: "m15", szczeki: "m15", trzpienie: "m15", szpilki: "12.5" },
-    DIA35: { matryca: "s13", szczeki: "s13", trzpienie: "s13", szpilki: "12.5" },
-    DIA40: { matryca: "s13", szczeki: "s13", trzpienie: "s13", szpilki: "12.5" },
-    DIA50: { matryca: "pushon", szczeki: "pushon", trzpienie: "pushon", szpilki: "pushon" }
+    DIA28: { matryca: "s13", bushing:"s13", matryca_chlodz:"s13", otwor:"2", przekladacze:"s13", szczeki: "s13", trzpienie: "s13", szpilki: "12.5" },
+    DIA30: { matryca: "s13", bushing:"s13", matryca_chlodz:"s13", otwor:"2", przekladacze:"s13", szczeki: "s13", trzpienie: "s13", szpilki: "12.5" },
+    DIA35: { matryca: "s13", bushing:"s13", matryca_chlodz:"s13", otwor:"2", przekladacze:"s13", szczeki: "s13", trzpienie: "s13", szpilki: "12.5" },
+    DIA40: { matryca: "s13", bushing:"s13", matryca_chlodz:"s13", otwor:"2", przekladacze:"s13", szczeki: "s13", trzpienie: "s13", szpilki: "12.5" },
+    DIA50: { matryca: "pushon", bushing:"pushon", matryca_chlodz:"pushon", otwor:"pushon", przekladacze:"pushon", szczeki: "pushon", trzpienie: "pushon ", szpilki: "pushon" }
   }
 };
 const defaultOMs = () => ({
