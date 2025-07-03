@@ -2,11 +2,11 @@ import { Routes, Route, useLocation} from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import ProtectedRoute from './components/ProtectedRoute';
-import AdminPanel from './pages/AdminPanelLayout';
-import UserPanel from './pages/UserPanel';
 import LoginPage from './pages/LoginPage';
-import HomePageUser from './components/UserComponents/HomePageUser';
+import ProtectedRoute from './components/ProtectedRoute';
+
+//ADMIN IMPORTS
+import AdminPanel from './pages/AdminPanelLayout';
 import MachineManagement from './components/AdminComponents/MachineManagement';
 import UserManagement from './components/AdminComponents/UserManagement';
 import Reports from './components/AdminComponents/Reports';
@@ -14,15 +14,21 @@ import Settings from './components/AdminComponents/Settings';
 import AdminPSG1 from './components/AdminComponents/Machines/AdminPSG1';
 import AdminPSG2 from './components/AdminComponents/Machines/AdminPSG2';
 import AdminPSG3 from './components/AdminComponents/Machines/AdminPSG3';
+
+// USERS IMPORTS
+import UserPanel from './pages/UserPage';
+import HomePageUser from './components/UserComponents/HomePageUser';
 import PSG1 from './components/UserComponents/UserPsg1';
 import PSG3 from './components/UserComponents/UserPsg3';
 import PSG2 from './components/UserComponents/UserPsg2';
-import ORDER from './components/UserComponents/Order';
-import Stock from './components/UserComponents/Stock';
-import Plans from './components/UserComponents/Plans';
-import Tools from './components/UserComponents/Tools'
+import ORDER from './components/UserComponents/UserMenu/Order';
+import Stock from './components/UserComponents/UserMenu/Stock';
+import Plans from './components/UserComponents/UserMenu/Plans';
+import Tools from './components/UserComponents/UserMenu/Tools';
 import ENGEL from './components/AdminComponents/Machines/ENGEL';
 import GALUS from './components/AdminComponents/Machines/GALUS';
+
+
 function App() {
 
   const location = useLocation();
@@ -37,7 +43,7 @@ function App() {
                 initial={{ opacity: 0, x: 0 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 0 }}
-                transition={{ duration: 0.2 }} // 2 sekundy animacji przejścia
+                transition={{ duration: 0.3 }} 
               >
                 <LoginPage />
               </motion.div>
@@ -51,7 +57,7 @@ function App() {
                   initial={{ opacity: 0, x: 0 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 0 }}
-                  transition={{ duration: 0.2 }} // 2 sekundy animacji przejścia
+                  transition={{ duration: 0.3 }} 
                 >
                   <AdminPanel />
                 </motion.div>
@@ -70,17 +76,17 @@ function App() {
         </Route>
 
         <Route element={<ProtectedRoute requiredRole="User" />}>
-  <Route path="/user" element={<UserPanel />}>
-    <Route index element={<HomePageUser />} />
-    <Route path="psg1" element={<PSG1 />} />
-    <Route path="psg2" element={<PSG2 />} />
-    <Route path="psg3" element={<PSG3 />} />
-    <Route path="psg1/plans" element={<Plans />} />
-    <Route path="psg1/orders" element={<ORDER />} />
-    <Route path="psg1/stock" element={<Stock />} />
-    <Route path="psg1/tools" element={<Tools />} />
-    {/* Analogicznie dla PSG2 i PSG3 */}
-  </Route>
+          <Route path="/user" element={<UserPanel />}>
+            <Route index element={<HomePageUser />} />
+            <Route path="psg1" element={<PSG1 />} />
+            <Route path="psg2" element={<PSG2 />} />
+            <Route path="psg3" element={<PSG3 />} />
+            <Route path="psg1/plans" element={<Plans />} />
+            <Route path="psg1/orders" element={<ORDER />} />
+            <Route path="psg1/stock" element={<Stock />} />
+            <Route path="psg1/tools" element={<Tools />} />
+            {/* Analogicznie dla PSG2 i PSG3 */}
+          </Route>
 </Route>
 </Routes>
       </AnimatePresence>

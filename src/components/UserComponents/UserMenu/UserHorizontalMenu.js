@@ -1,12 +1,19 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from 'framer-motion';
-import './horizontalMenu.css';
+
 
 const UserHorizontalMenu = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  
+
+  const HorizontalStyle = {
+                          display: 'flex',
+                          gap:'30px',
+                          justifyContent: 'center',
+                          alignItems: 'center'
+                          }
+
   // Wyciągamy segment ścieżki (np. "psg1" z "/user/psg1")
   const currentSegment = location.pathname.split('/')[2] || 'main';
 
@@ -62,7 +69,10 @@ const UserHorizontalMenu = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
       >
-        <div className="userHorizontalMenu">
+        <div 
+        className="userHorizontalMenu"
+        style= {HorizontalStyle} >
+
           {/* Główne menu */}
           {currentSegment === 'main' && MainMenu.map(item => (
             <button

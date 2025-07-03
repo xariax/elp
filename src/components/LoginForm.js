@@ -1,12 +1,50 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-// BACKEND INTEGRATION: Odkomentuj gdy będziesz mieć klienta API
-// import apiClient from '../api/client';
+import styled from 'styled-components';
 
-/**
- * Formularz logowania
- */
+// Styled-components deklaruj ZAWSZE poza funkcją komponentu!
+const FormBox = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  gap: 15px;
+  background: rgba(255,255,255,0.85); /* lekko białe tło dla czytelności */
+  padding: 32px 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+  min-height:250px;
+  min-width: 300px;
+`;
+
+const StyledInput = styled.input`
+  width: 80%;
+  border-radius: 10px;
+  padding: 10px;
+  border: 2px solid #ccc;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  &:focus {
+  border-color: #1976d2;}
+  &:hover {
+  border-color: #1976d2;}
+`;
+
+const StyledButton = styled.button`
+  border-radius: 10px;
+  width:50%;
+  padding: 20px;
+  border: none;
+  background: #1976d2;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+  &:hover {
+    background:rgb(45, 90, 141);
+  }
+`;
+
 const LoginForm = () => {
   const [credentials, setCredentials] = useState({ login: '', password: '' });
   const [error, setError] = useState('');
@@ -22,27 +60,11 @@ const LoginForm = () => {
     { login: 'anna', password: 'anna123', role: 'User' },
   ];
 
-  /**
-   * Obsługa logowania
-   * @param {Event} e - Event formularza
-   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setIsSubmitting(true);
 
-    // BACKEND INTEGRATION: Zastąp ten blok połączeniem z API
-    // try {
-    //   const response = await apiClient.post('/login', credentials);
-    //   login(response.data.user, response.data.token);
-    //   navigate(foundUser.role === 'admin' ? '/admin' : '/dashboard', { replace: true });
-    // } catch (err) {
-    //   setError('Błąd logowania');
-    // } finally {
-    //   setIsSubmitting(false);
-    // }
-
-    // Logika tymczasowa (frontend only)
     const foundUser = users.find(
       user => user.login === credentials.login && user.password === credentials.password
     );
@@ -62,9 +84,11 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    
+    <FormBox onSubmit={handleSubmit}>
       {error && <div style={{ color: 'red', marginBottom: 8 }}>{error}</div>}
-      <input
+       <h1 style={{marginBottom:'-2px'}}>Logowanie</h1>
+      <StyledInput
         type="text"
         value={credentials.login}
         onChange={e => setCredentials({ ...credentials, login: e.target.value })}
@@ -72,7 +96,9 @@ const LoginForm = () => {
         required
         disabled={isSubmitting}
       />
-      <input
+
+     
+      <StyledInput
         type="password"
         value={credentials.password}
         onChange={e => setCredentials({ ...credentials, password: e.target.value })}
@@ -80,10 +106,10 @@ const LoginForm = () => {
         required
         disabled={isSubmitting}
       />
-      <button type="submit" disabled={isSubmitting}>
+      <StyledButton type="submit" disabled={isSubmitting}>
         {isSubmitting ? 'Logowanie...' : 'Zaloguj'}
-      </button>
-    </form>
+      </StyledButton>
+    </FormBox>
   );
 };
 
