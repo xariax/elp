@@ -84,6 +84,65 @@ function getPartsToRemove(oldParts, newParts) {
   return oldParts.filter(oldPart => !newParts.find(p => p.numer === oldPart.numer));
 }
 
+
+// --- JEDNA TABELA ZMIAN ---
+function ChangeListTable({ doZalozenia, doZdjecia }) {
+  const rows = [
+    ...doZdjecia.map(part => ({ ...part, type: "remove" })),
+    ...doZalozenia.map(part => ({ ...part, type: "add" })),
+  ];
+
+  function getBgColor(type) {
+    if (type === "add") return "#d4edda";     // zielone
+    if (type === "remove") return "#f8d7da";  // czerwone
+    return "transparent";
+  }
+  function getBorderColor(bg) {
+    if (bg === "#d4edda") return "#3c763d";
+    if (bg === "#f8d7da") return "#a94442";
+    return "#ccc";
+  }
+
+  return (
+    <div>
+      <h4>Lista zmian</h4>
+      <table border="1" cellPadding="4" style={{ minWidth: 350, borderCollapse: "collapse" }}>
+        <thead>
+          <tr>
+            <th>Akcja</th>
+            <th>Nazwa</th>
+            <th>Ilość</th>
+            <th>Numer</th>
+            <th>Wariant</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map(part => {
+            const bg = getBgColor(part.type);
+            return (
+              <tr
+                key={part.numer + part.type}
+                style={{
+                  background: bg,
+                  border: `2px solid ${getBorderColor(bg)}`
+                }}
+              >
+                <td style={{ fontWeight: "bold" }}>
+                  {part.type === "add" ? "Założyć" : "Zdjąć"}
+                </td>
+                <td>{part.name}</td>
+                <td>{part.ilosc}</td>
+                <td>{part.numer}</td>
+                <td>{part.variant || ""}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 // --- KOMPONENTY ---
 function VariantsPanel({ version, diameter, variants, setVariants }) {
   const otherVersion = version === "A" ? "B" : "A";
@@ -463,11 +522,15 @@ export default function App() {
     if (version === "A") setSelectedCustomA(value);
     if (version === "B") setSelectedCustomB(value);
   }
-
-  const partsA = generatePartsTable(diameterA, variants.A, omSet.A[diameterA]);
+const partsA = generatePartsTable(diameterA, variants.A, omSet.A[diameterA]);
   const partsB = generatePartsTable(diameterB, variants.B, omSet.B[diameterB]);
+  const doZalozenia = getPartsToAdd(partsA, partsB);
+  const doZdjecia = getPartsToRemove(partsA, partsB);
+  
 
   return (
+
+
     <div style={{ padding: 20, fontFamily: "Arial, sans-serif" }}>
       <h2>Porównanie części i wariantów</h2>
       <div style={{ marginBottom: 8 }}>
@@ -559,10 +622,12 @@ export default function App() {
         setOmSet={setOmSet}
         enabled={membrana}
       />
+{/*
       <div style={{ display: "flex", gap: 30 }}>
         <PartsTable title={`Części (${diameterA}, warianty A)`} parts={partsA} compareParts={partsB} />
         <PartsTable title={`Części (${diameterB}, warianty B)`} parts={partsB} compareParts={partsA} />
       </div>
+*/} 
       <PartsDiff
         oldParts={partsA}
         newParts={partsB}
@@ -603,6 +668,11 @@ export default function App() {
           Zarządzaj wariantami
         </button>
       </div>
+
+<div style={{ padding: 20, fontFamily: "Arial, sans-serif" }}>
+      {/* ... inne panele ... */}
+      <ChangeListTable doZalozenia={doZalozenia} doZdjecia={doZdjecia} />
+    </div>
     </div>
   );
 }
