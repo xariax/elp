@@ -581,163 +581,153 @@ function handleSetGlobalVariant(variant) {
     if (version === "B") setSelectedCustomB(value);
   }
 
-  
-
   return (
-
-
-    <div style={{ padding: 20, fontFamily: "Arial, sans-serif" }}>
-      <h2>Porównanie części i wariantów</h2>
-      <div style={{ marginBottom: 8 }}>
-        <span style={{ background: "#d4edda", padding: "2px 8px", borderRadius: 4, marginRight: 8 }}>Zgodne</span>
-        <span style={{ background: "#f8d7da", padding: "2px 8px", borderRadius: 4 }}>Różne</span>
-      </div>
-
-
-
-      <div style={{ margin: "12px 0" }}>
-        <label>
-          <input
-            type="checkbox"
-            checked={membrana}
-            onChange={e => setMembrana(e.target.checked)}
-          />
-          &nbsp;Membrana zamontowana (po zaznaczeniu można wybrać OMy)
-        </label>
-      </div>
-      <div style={{ marginBottom: 12 }}>
-        <label>
-          Wybierz średnicę (A):&nbsp;
-          <select value={diameterA} onChange={e => setDiameterA(e.target.value)}>
-            {DIAMETERS.map(dia => (
-              <option key={dia} value={dia}>{dia}</option>
-            ))}
-          </select>
-        </label>
-        &nbsp;&nbsp;
-        <label>
-          Wybierz średnicę (B):&nbsp;
-          <select value={diameterB} onChange={e => setDiameterB(e.target.value)}>
-            {DIAMETERS.map(dia => (
-              <option key={dia} value={dia}>{dia}</option>
-            ))}
-          </select>
-        </label>
-      </div>
-      {/* Wybór niestandardowego wariantu */}
-      <div style={{ marginBottom: 10 }}>
-        <label>
-          Wariant niestandardowy (A):&nbsp;
-          <select
-            value={selectedCustomA}
-            onChange={e => handleCustomSelect("A", e.target.value)}
-          >
-            <option value="">-- wybierz --</option>
-            {Object.keys(customVariants).map(name => (
-              <option key={name} value={name}>{name}</option>
-            ))}
-          </select>
-        </label>
-        &nbsp;&nbsp;
-        <label>
-          Wariant niestandardowy (B):&nbsp;
-          <select
-            value={selectedCustomB}
-            onChange={e => handleCustomSelect("B", e.target.value)}
-          >
-            <option value="">-- wybierz --</option>
-            {Object.keys(customVariants).map(name => (
-              <option key={name} value={name}>{name}</option>
-            ))}
-          </select>
-        </label>
-      </div>
-
-<GlobalVariantSelector
-  selected={globalVariant}
-  onChange={handleSetGlobalVariant}
-/>
-
-
-      {/* Panel A */}
-      <VariantsPanel
-        version="A"
-        diameter={diameterA}
-        variants={variants}
-        setVariants={setVariants}
-      />
-      <OMPanel
-        version="A"
-        diameter={diameterA}
-        omSet={omSet}
-        setOmSet={setOmSet}
-        enabled={membrana}
-      />
-      {/* Panel B */}
-      <VariantsPanel
-        version="B"
-        diameter={diameterB}
-        variants={variants}
-        setVariants={setVariants}
-      />
-      <OMPanel
-        version="B"
-        diameter={diameterB}
-        omSet={omSet}
-        setOmSet={setOmSet}
-        enabled={membrana}
-      />
-
-<ChangeListTable doZalozenia={doZalozenia} doZdjecia={doZdjecia} />
-{/*
-      <div style={{ display: "flex", gap: 30 }}>
-        <PartsTable title={`Części (${diameterA}, warianty A)`} parts={partsA} compareParts={partsB} />
-        <PartsTable title={`Części (${diameterB}, warianty B)`} parts={partsB} compareParts={partsA} />
-      </div>
-*/} 
-      <PartsDiff
-        oldParts={partsA}
-        newParts={partsB}
-        oldLabel={`${diameterA} (A)`}
-        newLabel={`${diameterB} (B)`}
-      />
-      <PreviewModal
-        open={showPreview}
-        onClose={() => setShowPreview(false)}
-        partsA={partsA}
-        partsB={partsB}
-        diameterA={diameterA}
-        diameterB={diameterB}
-      />
-      <ManageVariantsModal
-        open={manageModal}
-        onClose={() => setManageModal(false)}
-        customVariants={customVariants}
-        setCustomVariants={setCustomVariants}
-      />
-      <div style={{ margin: "18px 0" }}>
-        <button
-          style={{
-            padding: "8px 16px", background: "#1976d2", color: "#fff",
-            border: "none", borderRadius: 4, cursor: "pointer", fontWeight: "bold", marginRight: 10
-          }}
-          onClick={() => setShowPreview(true)}
-        >
-          Podgląd do wydruku
-        </button>
-        <button
-          style={{
-            padding: "8px 16px", background: "#388e3c", color: "#fff",
-            border: "none", borderRadius: 4, cursor: "pointer", fontWeight: "bold"
-          }}
-          onClick={() => setManageModal(true)}
-        >
-          Zarządzaj wariantami
-        </button>
-      </div>
-
-
-
+  <div style={{ padding: 20, fontFamily: "Arial, sans-serif" }}>
+    <h2>Porównanie części i wariantów</h2>
+    <div style={{ marginBottom: 8 }}>
+      <span style={{ background: "#d4edda", padding: "2px 8px", borderRadius: 4, marginRight: 8 }}>Zgodne</span>
+      <span style={{ background: "#f8d7da", padding: "2px 8px", borderRadius: 4 }}>Różne</span>
     </div>
-  );
+
+    <div style={{ margin: "12px 0" }}>
+      <label>
+        <input
+          type="checkbox"
+          checked={membrana}
+          onChange={e => setMembrana(e.target.checked)}
+        />
+        &nbsp;Membrana zamontowana (po zaznaczeniu można wybrać OMy)
+      </label>
+    </div>
+    <div style={{ marginBottom: 12 }}>
+      <label>
+        Wybierz średnicę (A):&nbsp;
+        <select value={diameterA} onChange={e => setDiameterA(e.target.value)}>
+          {DIAMETERS.map(dia => (
+            <option key={dia} value={dia}>{dia}</option>
+          ))}
+        </select>
+      </label>
+      &nbsp;&nbsp;
+      <label>
+        Wybierz średnicę (B):&nbsp;
+        <select value={diameterB} onChange={e => setDiameterB(e.target.value)}>
+          {DIAMETERS.map(dia => (
+            <option key={dia} value={dia}>{dia}</option>
+          ))}
+        </select>
+      </label>
+    </div>
+    {/* Wybór niestandardowego wariantu */}
+    <div style={{ marginBottom: 10 }}>
+      <label>
+        Wariant niestandardowy (A):&nbsp;
+        <select
+          value={selectedCustomA}
+          onChange={e => handleCustomSelect("A", e.target.value)}
+        >
+          <option value="">-- wybierz --</option>
+          {Object.keys(customVariants).map(name => (
+            <option key={name} value={name}>{name}</option>
+          ))}
+        </select>
+      </label>
+      &nbsp;&nbsp;
+      <label>
+        Wariant niestandardowy (B):&nbsp;
+        <select
+          value={selectedCustomB}
+          onChange={e => handleCustomSelect("B", e.target.value)}
+        >
+          <option value="">-- wybierz --</option>
+          {Object.keys(customVariants).map(name => (
+            <option key={name} value={name}>{name}</option>
+          ))}
+        </select>
+      </label>
+    </div>
+
+    {/* RADIO BUTTONY Z WARIANTAMI */}
+    <GlobalVariantSelector
+      selected={globalVariant}
+      onChange={handleSetGlobalVariant}
+    />
+
+    {/* Panel A */}
+    <VariantsPanel
+      version="A"
+      diameter={diameterA}
+      variants={variants}
+      setVariants={setVariants}
+    />
+    <OMPanel
+      version="A"
+      diameter={diameterA}
+      omSet={omSet}
+      setOmSet={setOmSet}
+      enabled={membrana}
+    />
+    {/* Panel B */}
+    <VariantsPanel
+      version="B"
+      diameter={diameterB}
+      variants={variants}
+      setVariants={setVariants}
+    />
+    <OMPanel
+      version="B"
+      diameter={diameterB}
+      omSet={omSet}
+      setOmSet={setOmSet}
+      enabled={membrana}
+    />
+
+    {/* TABELA ZMIAN */}
+    <ChangeListTable doZalozenia={doZalozenia} doZdjecia={doZdjecia} />
+
+    {/* Pozostałe modale i przyciski */}
+    <PartsDiff
+      oldParts={partsA}
+      newParts={partsB}
+      oldLabel={`${diameterA} (A)`}
+      newLabel={`${diameterB} (B)`}
+    />
+    <PreviewModal
+      open={showPreview}
+      onClose={() => setShowPreview(false)}
+      partsA={partsA}
+      partsB={partsB}
+      diameterA={diameterA}
+      diameterB={diameterB}
+    />
+    <ManageVariantsModal
+      open={manageModal}
+      onClose={() => setManageModal(false)}
+      customVariants={customVariants}
+      setCustomVariants={setCustomVariants}
+    />
+    <div style={{ margin: "18px 0" }}>
+      <button
+        style={{
+          padding: "8px 16px", background: "#1976d2", color: "#fff",
+          border: "none", borderRadius: 4, cursor: "pointer", fontWeight: "bold", marginRight: 10
+        }}
+        onClick={() => setShowPreview(true)}
+      >
+        Podgląd do wydruku
+      </button>
+      <button
+        style={{
+          padding: "8px 16px", background: "#388e3c", color: "#fff",
+          border: "none", borderRadius: 4, cursor: "pointer", fontWeight: "bold"
+        }}
+        onClick={() => setManageModal(true)}
+      >
+        Zarządzaj wariantami
+      </button>
+    </div>
+  </div>
+);
+
+ 
 }
