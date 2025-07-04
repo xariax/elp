@@ -1,6 +1,6 @@
 import  { useState } from "react";
 
-// --- KONFIGURACJA ---
+// --- KONFIGURACJA ----
 
 
 
