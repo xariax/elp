@@ -727,8 +727,14 @@ function handleSetGlobalVariant(variant) {
       enabled={membrana}
     />
 
+<strong>Kod przezbrojenia A:</strong> {codeA}
+  <br />
+  <strong>Kod przezbrojenia B:</strong> {codeB}
+
     {/* TABELA ZMIAN */}
     <ChangeListTable doZalozenia={doZalozenia} doZdjecia={doZdjecia} />
+
+
 
     {/* Pozostałe modale i przyciski */}
     <PartsDiff
@@ -752,9 +758,7 @@ function handleSetGlobalVariant(variant) {
       setCustomVariants={setCustomVariants}
     />
 
-  <strong>Kod przezbrojenia A:</strong> {codeA}
-  <br />
-  <strong>Kod przezbrojenia B:</strong> {codeB}
+  
 
 
     <div style={{ margin: "18px 0" }}>
