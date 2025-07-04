@@ -693,6 +693,13 @@ function handleSetGlobalVariant(variant) {
           ))}
         </select>
       </label>
+
+<div style={{ margin: "20px 0" }}>
+      <strong>Kod przezbrojenia A:</strong> {generateRetoolingCode(variants.A[diameterA] || {})}
+      <br />
+      <strong>Kod przezbrojenia B:</strong> {generateRetoolingCode(variants.B[diameterB] || {})}
+    </div>
+
     </div>
 
     {/* RADIO BUTTONY Z WARIANTAMI */}
@@ -730,11 +737,7 @@ function handleSetGlobalVariant(variant) {
       enabled={membrana}
     />
 
-<div style={{ margin: "20px 0" }}>
-  <strong>Kod przezbrojenia A:</strong> {generateRetoolingCode(variants.A[diameterA] || {})}
-  <br />
-  <strong>Kod przezbrojenia B:</strong> {generateRetoolingCode(variants.B[diameterB] || {})}
-</div>
+
 
     {/* TABELA ZMIAN */}
     <ChangeListTable doZalozenia={doZalozenia} doZdjecia={doZdjecia} />
