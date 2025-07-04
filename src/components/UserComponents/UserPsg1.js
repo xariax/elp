@@ -2,6 +2,8 @@ import  { useState } from "react";
 
 // --- KONFIGURACJA ---
 
+
+
 const PART_CODE_MAP = {
   szczeki: "SZ",
   trzpienie: "T",
@@ -69,6 +71,8 @@ const defaultOMs = () => ({
 // --- FUNKCJE POMOCNICZE ---
 
 
+
+
 function generateRetoolingCode(variants) {
   return Object.entries(PART_CODE_MAP)
     .map(([part, prefix]) => {
@@ -80,7 +84,6 @@ function generateRetoolingCode(variants) {
     })
     .join("");
 }
-
 function generatePartsTable(diameter, variantSet, omSet) {
   const variants = variantSet[diameter] || {};
   return PARTS_CONFIG
