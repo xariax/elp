@@ -752,11 +752,9 @@ function handleSetGlobalVariant(variant) {
       setCustomVariants={setCustomVariants}
     />
 
-<div style={{ margin: "20px 0" }}>
   <strong>Kod przezbrojenia A:</strong> {codeA}
   <br />
   <strong>Kod przezbrojenia B:</strong> {codeB}
-</div>
 
 
     <div style={{ margin: "18px 0" }}>
