@@ -1,6 +1,14 @@
 import  { useState } from "react";
 
 // --- KONFIGURACJA ---
+
+const PART_CODE_MAP = {
+  szczeki: "SZ",
+  trzpienie: "T",
+  matryca_chlodz: "MCH",
+  przekladacze: "P"
+};
+
 const GLOBAL_VARIANTS = ["s13", "m15", "fts", "fractal", "niski-fractal", "pushon"];
 const TOOL_VARIANTS = ["s13", "m15", "pushon", "fractal", "fts"];
 const BUSHING = ["s13", "m15", "pushon"];
@@ -59,6 +67,20 @@ const defaultOMs = () => ({
 });
 
 // --- FUNKCJE POMOCNICZE ---
+
+
+function generateRetoolingCode(variants) {
+  return Object.entries(PART_CODE_MAP)
+    .map(([part, prefix]) => {
+      const variant = variants[part];
+      if (variant) {
+        return prefix + variant.toUpperCase().replace(/\s/g, "");
+      }
+      return "";
+    })
+    .join("");
+}
+
 function generatePartsTable(diameter, variantSet, omSet) {
   const variants = variantSet[diameter] || {};
   return PARTS_CONFIG
@@ -555,6 +577,8 @@ export default function App() {
   const [customVariants, setCustomVariants] = useState({});
   const [selectedCustomA, setSelectedCustomA] = useState("");
   const [selectedCustomB, setSelectedCustomB] = useState("");
+const codeA = generateRetoolingCode(variants.A[diameterA] || {});
+const codeB = generateRetoolingCode(variants.B[diameterB] || {});
 
 const partsA = generatePartsTable(diameterA, variants.A, omSet.A[diameterA]);
   const partsB = generatePartsTable(diameterB, variants.B, omSet.B[diameterB]);
@@ -727,6 +751,14 @@ function handleSetGlobalVariant(variant) {
       customVariants={customVariants}
       setCustomVariants={setCustomVariants}
     />
+
+<div style={{ margin: "20px 0" }}>
+  <strong>Kod przezbrojenia A:</strong> {codeA}
+  <br />
+  <strong>Kod przezbrojenia B:</strong> {codeB}
+</div>
+
+
     <div style={{ margin: "18px 0" }}>
       <button
         style={{
