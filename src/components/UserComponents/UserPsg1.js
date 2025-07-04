@@ -170,25 +170,6 @@ function ChangeListTable({ doZalozenia, doZdjecia }) {
 }
 
 // --- KOMPONENTY ---
-function GlobalVariantSelector({ selected, onChange }) {
-  return (
-    <div style={{ marginBottom: 16 }}>
-      <strong>Ustaw domyślny wariant dla wszystkich pól:&nbsp;</strong>
-      {GLOBAL_VARIANTS.map(v => (
-        <label key={v} style={{ marginRight: 12 }}>
-          <input
-            type="radio"
-            name="global-variant"
-            value={v}
-            checked={selected === v}
-            onChange={() => onChange(v)}
-          />
-          &nbsp;{v}
-        </label>
-      ))}
-    </div>
-  );
-}
 
 
 
