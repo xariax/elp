@@ -1,4 +1,4 @@
-import React from "react";
+
 import { useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -18,35 +18,27 @@ const UserHorizontalMenu = () => {
   // Wyciągamy segment ścieżki (np. "psg1" z "/user/psg1")
   const currentSegment = location.pathname.split('/')[2] || 'main';
 
-  const MainMenu = [
-    { id: 'psg1', label: 'PSG1', path: "/user/psg1" },
-    { id: 'psg2', label: 'PSG2', path: "/user/psg2" },
-    { id: 'psg3', label: 'PSG3', path: "/user/psg3" }
-  ];
 
   const optionsPsg1 = [
-    { id: '0', label: 'Strona Główna', path: "/user" },
+    { id: '0', label: 'Strona Główna', path: "/user/psg1" },
     { id: '1', label: 'Plany', path: "/user/psg1/plans" },
     { id: '2', label: 'Zamówienia', path: "/user/psg1/orders" },
     { id: '3', label: 'Magazyn', path: "/user/psg1/stock" },
     { id: '4', label: 'Narzędzia', path: "/user/psg1/tools" },
-    { id: '5', label: 'Powrót', path: "/user" }
   ];
 
   const optionsPsg2 = [
-    { id: '0', label: 'Strona Główna', path: "/user" },
+    { id: '0', label: 'Strona Główna', path: "/user/psg2" },
     { id: '1', label: 'Plany', path: "/user/psg2" },
     { id: '2', label: 'Zamówienia', path: "/user/psg2/zamowienia" },
-    { id: '3', label: 'Magazyn', path: "/user/psg2/magazyn" },
-    { id: '4', label: 'Powrót', path: "/user" }
+    { id: '3', label: 'Magazyn', path: "/user/psg2/magazyn" }
   ];
 
   const optionsPsg3 = [
-    { id: '0', label: 'Strona Główna', path: "/user" },
+    { id: '0', label: 'Strona Główna', path: "/user/psg3" },
     { id: '1', label: 'Plany', path: "/user/psg3" },
     { id: '2', label: 'Zamówienia', path: "/user/psg3/zamowienia" },
-    { id: '3', label: 'Magazyn', path: "/user/psg3/magazyn" },
-    { id: '4', label: 'Powrót', path: "/user" }
+    { id: '3', label: 'Magazyn', path: "/user/psg3/magazyn" }
   ];
 
   const handleClick = (path) => {
@@ -73,17 +65,6 @@ const UserHorizontalMenu = () => {
         <div 
         className="userHorizontalMenu"
         style= {HorizontalStyle} >
-
-          {/* Główne menu */}
-          {currentSegment === 'main' && MainMenu.map(item => (
-            <button
-              key={item.id}
-              className="menu-item"
-              onClick={() => handleClick(item.path)}
-            >
-              {item.label}
-            </button>
-          ))}
           
           {/* Podmenu */}
           {currentSegment !== 'main' && options.map(option => (
