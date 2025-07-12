@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
-import BarPo from "../components/UserComponents/BarPO"; // popraw ścieżkę jeśli plik jest gdzie indziej
+import BarPo from "./BarPO"; // popraw ścieżkę jeśli plik jest gdzie indziej
 import styled from "styled-components";
 import Button from '@mui/material/Button';
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 
 

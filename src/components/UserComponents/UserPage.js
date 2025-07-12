@@ -5,13 +5,13 @@ import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
 import ContactMailIcon from '@mui/icons-material/ContactMail';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 
-import UserHorizontalMenu from '../components/UserComponents/UserMenu/UserHorizontalMenu';
-import LoggedAsText from '../components/UserComponents/LoggedAssText';
-import { SidebarNavButton } from '../components/UserComponents/Buttons/SideBarNavButton';
+import UserHorizontalMenu from './UserMenu/UserHorizontalMenu';
+import LoggedAsText from './LoggedAssText';
+import { SidebarNavButton } from './Buttons/SideBarNavButton';
 
-import "./style/UserPanel.css";
+import "../../pages/style/UserPanel.css";
 
 const drawerWidthOpen = 200;
 const drawerWidthClosed = 50;

@@ -1,58 +1,39 @@
-
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { AnimatePresence, motion } from 'framer-motion';
-
 
 const UserHorizontalMenu = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { machine } = useParams();
 
   const HorizontalStyle = {
-                          display: 'flex',
-                          gap:'20px',
-                          wrap:'no-wrap',
-                          justifyContent: 'center',
-                          alignItems: 'center'
-                          }
+    display: 'flex',
+    gap: '20px',
+    wrap: 'no-wrap',
+    justifyContent: 'center',
+    alignItems: 'center'
+  };
+
+  // Jeśli nie ma parametru machine, nie pokazuj menu
+  if (!machine) return null;
 
   // Wyciągamy segment ścieżki (np. "psg1" z "/user/psg1")
   const currentSegment = location.pathname.split('/')[2] || 'main';
 
-
-  const optionsPsg1 = [
-    { id: '0', label: 'Strona Główna', path: "/user/psg1" },
-    { id: '1', label: 'Plany', path: "/user/psg1/plans" },
-    { id: '2', label: 'Zamówienia', path: "/user/psg1/orders" },
-    { id: '3', label: 'Magazyn', path: "/user/psg1/stock" },
-    { id: '4', label: 'Narzędzia', path: "/user/psg1/tools" },
-  ];
-
-  const optionsPsg2 = [
-    { id: '0', label: 'Strona Główna', path: "/user/psg2" },
-    { id: '1', label: 'Plany', path: "/user/psg2" },
-    { id: '2', label: 'Zamówienia', path: "/user/psg2/zamowienia" },
-    { id: '3', label: 'Magazyn', path: "/user/psg2/magazyn" }
-  ];
-
-  const optionsPsg3 = [
-    { id: '0', label: 'Strona Główna', path: "/user/psg3" },
-    { id: '1', label: 'Plany', path: "/user/psg3" },
-    { id: '2', label: 'Zamówienia', path: "/user/psg3/zamowienia" },
-    { id: '3', label: 'Magazyn', path: "/user/psg3/magazyn" }
+  // Uniwersalne opcje menu
+  const universalOptions = [
+    { id: '0', label: 'Strona Główna', path: `/user/${machine}` },
+    { id: '1', label: 'Plany', path: `/user/${machine}/plans` },
+    { id: '2', label: 'Zamówienia', path: `/user/${machine}/orders` },
+    { id: '3', label: 'Magazyn', path: `/user/${machine}/stock` },
+    { id: '4', label: 'Narzędzia', path: `/user/${machine}/tools` },
   ];
 
   const handleClick = (path) => {
-    // Nawiguj tylko jeśli nie jesteśmy już na tej ścieżce
     if (location.pathname !== path) {
-      navigate(path, { replace: true }); // replace: true zapobiega powielaniu ścieżki
+      navigate(path, { replace: true });
     }
   };
-
-  // Wybierz odpowiednie opcje na podstawie aktualnej ścieżki
-  let options = [];
-  if (currentSegment === 'psg1') options = optionsPsg1;
-  if (currentSegment === 'psg2') options = optionsPsg2;
-  if (currentSegment === 'psg3') options = optionsPsg3;
 
   return (
     <AnimatePresence mode="wait">
@@ -62,12 +43,8 @@ const UserHorizontalMenu = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
       >
-        <div 
-        className="userHorizontalMenu"
-        style= {HorizontalStyle} >
-          
-          {/* Podmenu */}
-          {currentSegment !== 'main' && options.map(option => (
+        <div className="userHorizontalMenu" style={HorizontalStyle}>
+          {universalOptions.map(option => (
             <button
               key={option.id}
               className="menu-item"

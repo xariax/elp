@@ -18,8 +18,8 @@ import ENGEL from './components/AdminComponents/Machines/ENGEL';
 import GALUS from './components/AdminComponents/Machines/GALUS';
 
 // USER IMPORTS
-import UserPage from './pages/UserPage';
-import UserMachineHome from './pages/UserMachineHome';
+import UserPage from './components/UserComponents/UserPage';
+import UserMachineHome from './components/UserComponents/UserMachineHome';
 import ORDER from './components/UserComponents/UserMenu/Order';
 import Stock from './components/UserComponents/UserMenu/Stock';
 import Plans from './components/UserComponents/UserMenu/Plans';
